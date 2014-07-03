@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add to Playlist</title>
+<script src="http://p.jwpcdn.com/6/9/jwplayer.js"></script>
+<style type="text/css">
+body {
+	font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+}
+a {
+	color:#000000;
+}
+ul,li {
+	list-style:none;
+}
+</style>
+<script type="text/javascript">
+var addVideo = function(videoUrl, videoThumb, videoTitle, videoDesc){
+	var playlist = jwplayer().getPlaylist();
+	var newItem = {
+		file: videoUrl,
+		image: videoThumb,
+		title: videoTitle,
+		description: videoDesc
+	};
+	if(jwplayer().getState() != "PLAYING"){
+		playlist.push(newItem);
+		jwplayer().load(playlist);
+	} else {
+		playlist.push(newItem);
+		var curpos = jwplayer().getPosition();
+		jwplayer().onPlaylist(function(){
+			jwplayer().seek(curpos);
+		});
+		jwplayer().load(playlist).onPlaylist(function(){
+			jwplayer().seek(curpos);
+		});
+	}
+}
+</script>
+</head>
+<body>
+<div id="myElement"></div>
+<script>
+jwplayer("myElement").setup({
+      playlist: [{
+        file: "http://content.bitsontherun.com/videos/3XnJSIm4-640.mp4",
+        image: "http://assets-jp.jwpsrv.com/thumbs/3XnJSIm4-640.jpg",
+        title: "Sintel Trailer",
+        description: "Sintel is a fantasy CGI movie from the Blender Open Movie Project."
+      },{
+        file: "http://content.bitsontherun.com/videos/i8oQD9zd-640.mp4",
+        image: "http://assets-jp.jwpsrv.com/thumbs/i8oQD9zd-640.jpg",
+        title: "Tears of Steel Trailer",
+        description: "A complete open pipeline was used to produce this visual effect film."
+      },{
+        file: "http://content.bitsontherun.com/videos/bkaovAYt-640.mp4",
+        image: "http://assets-jp.jwpsrv.com/thumbs/bkaovAYt-640.jpg",
+        title: "Big Buck Bunny Trailer",
+        description: "This animated film is made using free and open source software."
+      },{
+        file: "http://content.bitsontherun.com/videos/kaUXWqTZ-640.mp4",
+        image: "http://assets-jp.jwpsrv.com/thumbs/kaUXWqTZ-640.jpg",
+        title: "Elephants Dream Trailer",
+        description: "This is the worlds first open movie, made entirely with Blender."
+      }],
+      width: 700,
+      height: 240,
+      listbar: {
+        position: "right",
+        size: 280
+      }
+    });
+</script>
+<p>Click on one of the links below to add an item to the player:</p>
+<ul>
+<li><a href="#" onclick="addVideo('http://content.bitsontherun.com/videos/yj1shGJB-60830.mp4', 'http://content.bitsontherun.com/thumbs/yj1shGJB-320.jpg', 'Sintel trailer', 'Sintel is a fantasy CGI movie from the Blender Open Movie Project.'); return false;">Add the Sintel trailer to the playlist</a></li>
+<li><a href="#" onclick="addVideo('http://content.bitsontherun.com/videos/i8oQD9zd-kNspJqnJ.mp4', 'http://content.bitsontherun.com/thumbs/i8oQD9zd-640.jpg', 'Tears of Steel Trailer', 'A complete open pipeline was used to produce this visual effect film.'); return false;">Add the Tears of Steel trailer to the playlist</a></li>
+<li><a href="#" onclick="addVideo('http://content.bitsontherun.com/videos/bkaovAYt-640.mp4', 'http://assets-jp.jwpsrv.com/thumbs/bkaovAYt-640.jpg', 'Big Buck Bunny Trailer', 'This animated film is made using free and open source software.'); return false;">Add the Big Buck Bunny trailer to the playlist</a></li>
+<li><a href="#" onclick="addVideo('http://content.bitsontherun.com/videos/kaUXWqTZ-640.mp4', 'http://assets-jp.jwpsrv.com/thumbs/kaUXWqTZ-640.jpg', 'Elephants Dream Trailer', 'This animated film is made using free and open source software.'); return false;">Add the Elephants Dream trailer to the playlist</a></li>
+</ul>
+</body>
+</html>
